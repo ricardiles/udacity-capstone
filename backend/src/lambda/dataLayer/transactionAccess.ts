@@ -11,19 +11,19 @@ const s3 = new XAWS.S3({
 const bucketName = process.env.IMAGES_S3_BUCKET
 const urlExpiration = Number(process.env.SIGNED_URL_EXPIRATION)
 
-import { TodoItem } from '../../models/TransactionItem'
+import { Transaction } from '../../models/TransactionItem'
 
 export class TodoAccess {
 
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
-    private readonly todosTable = process.env.TODOS_TABLE) {
+    private readonly transactionsTable = process.env.TRANSACTIONS_TABLE) {
   }
 
-  async getTodos(userId: string): Promise<TodoItem[]> {
+  async getTransactions(userId: string): Promise<Transaction[]> {
     console.log('Getting todos from user')
     var params = {
-        TableName : this.todosTable,
+        TableName : this.transactionsTable,
         KeyConditionExpression: "#idUser = :user",
         ExpressionAttributeNames:{
             "#idUser": "userId"
@@ -32,13 +32,13 @@ export class TodoAccess {
             ":user": userId
         }
     };
-    let result: TodoItem[] | PromiseLike<TodoItem[]>
+    let result: Transaction[] | PromiseLike<Transaction[]>
     await this.docClient.query(params, function(err, data) {
         if (err) {
             console.error("Unable to query. Error:", err);
         } else {
             console.log("Query succeeded.");
-            result = <TodoItem[]>data.Items
+            result = <Transaction[]>data.Items
         }
     }).promise()
 
@@ -92,7 +92,7 @@ export class TodoAccess {
   async deleteTodo(todoId: string, userId:string): Promise<string> {
 
     var params = {
-        TableName : this.todosTable,
+        TableName : this.transactionsTable,
         Key:{
           "todoId": todoId,
           "userId": userId
@@ -121,7 +121,7 @@ export class TodoAccess {
     let validated: boolean
 
     var params = {
-        TableName : this.todosTable,
+        TableName : this.transactionsTable,
         KeyConditionExpression: "#idUser = :user and #idTodo = :todo",
         ExpressionAttributeNames:{
             "#idUser": "userId",

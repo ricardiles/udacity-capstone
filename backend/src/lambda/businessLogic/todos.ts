@@ -1,14 +1,13 @@
 import * as uuid from 'uuid'
 
-import { TodoItem } from '../../models/TransactionItem'
-import { TodoAccess } from '../dataLayer/todoAccess'
+import { Transaction } from '../../models/TransactionItem'
+import { TodoAccess } from '../dataLayer/transactionAccess'
 import { getUserId } from '../auth/utils'
 
-interface CreateTodoRequest {
-    createdAt: string
-    name: string
-    dueDate: string
-    done: boolean
+interface CreateTransactionRequest {
+    amount: string
+    status: string
+    description: string
     attachmentUrl: string
   }
 
@@ -20,34 +19,35 @@ interface CreateTodoRequest {
 
 const todoAccess = new TodoAccess()
 
-export async function getTodos(jwtToken: string): Promise<TodoItem[]> {
+export async function getTransactions(jwtToken: string): Promise<Transaction[]> {
   const userId = getUserId(jwtToken)
-  return todoAccess.getTodos(userId)
+  return todoAccess.getTransactions(userId)
 }
 
-export async function createTodo(
-  createTodoRequest: CreateTodoRequest,
+export async function createTransaction(
+  createTodoRequest: CreateTransactionRequest,
   jwtToken: string
-): Promise<TodoItem> {
+): Promise<Transaction> {
 
   const itemId = uuid.v4()
   const userId = getUserId(jwtToken)
 
-  return await todoAccess.createTodo({
-    todoId: itemId,
+  const creation = await todoAccess.createTodo({
+    transactionId: itemId,
     userId: userId,
-    name: createTodoRequest.name,
-    dueDate: createTodoRequest.dueDate,
-    done: false,
+    description: createTodoRequest.description,
+    status: createTodoRequest.status,
+    amount: createTodoRequest.amount,
     createdAt: new Date().toISOString()
-  })
+  });
+  return creation;
 }
 
 export async function updateTodo(
   updateTodoRequest: UpdateTodoRequest,
   itemId: string,
   jwtToken: string
-): Promise<TodoItem> {
+): Promise<Transaction> {
 
   const userId = getUserId(jwtToken)
 
