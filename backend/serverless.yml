@@ -21,10 +21,10 @@ provider:
   region: ${opt:region, 'us-west-2'}
 
   environment:
-    TODOS_TABLE: Todos-${self:provider.stage}
-    IMAGES_TABLE: Images-${self:provider.stage}
-    IMAGE_ID_INDEX: ImageIdIndex
-    IMAGES_S3_BUCKET: serverless-todo-app-ardiles-${self:provider.stage}
+    TRANSACTIONS_TABLE: Transactions-${self:provider.stage}
+    VOUCHER_TABLE: Voucher-${self:provider.stage}
+    VOUCHER_ID_INDEX: VoucherIdIndex
+    VOUCHER_S3_BUCKET: udacity-capstone-ardiles-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
     AUTH_0_JWKS: https://dev-viwwox7z.us.auth0.com/.well-known/jwks.json
 
@@ -32,8 +32,8 @@ custom:
   api:
       info:
         version: v1.0.0
-        title: Todo List Api - Ricardo Ardiles
-        description: Serverless application for todo list project
+        title: Transaction register Api - Ricardo Ardiles
+        description: Serverless application for capstone project
   models:
       - name: CreateTodoRequest
         contentType: application/json
@@ -48,12 +48,12 @@ functions:
     handler: src/lambda/auth/auth0Authorizer.handler
 
   # TODO: Configure this function
-  GetTodos:
-    handler: src/lambda/http/getTodos.handler
+  GetTransactions:
+    handler: src/lambda/http/getTransaction.handler
     events:
       - http:
           method: get
-          path: todos
+          path: transactions
           cors: true
           authorizer: Auth
     iamRoleStatements:
@@ -61,7 +61,7 @@ functions:
         Action:
           - dynamodb:GetItem
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TRANSACTIONS_TABLE}
 
   # TODO: Configure this function
   CreateTodo:
@@ -130,17 +130,12 @@ functions:
         Action:
           - dynamodb:GetItem
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
-      - Effect: Allow
-        Action:
-          - dynamodb:PutItem
-          - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VOUCHER_TABLE}
       - Effect: Allow
         Action:
           - s3:PutObject
           - s3:GetObject
-        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+        Resource: arn:aws:s3:::${self:provider.environment.VOUCHER_S3_BUCKET}/*
 
 resources:
   Resources:
@@ -164,45 +159,45 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
 
-    GroupsDynamoDBTable:
+    TransactionsDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: todoId
+          - AttributeName: transactionId
             AttributeType: S
           - AttributeName: userId
             AttributeType: S
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: todoId
+          - AttributeName: transactionId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.TODOS_TABLE}
+        TableName: ${self:provider.environment.TRANSACTIONS_TABLE}
     
-    ImagesDynamoDBTable:
+    VoucherDynamoDBTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
         AttributeDefinitions:
-          - AttributeName: groupId
+          - AttributeName: transactionId
             AttributeType: S
           - AttributeName: timestamp
             AttributeType: S
-          - AttributeName: imageId
+          - AttributeName: voucherId
             AttributeType: S
         KeySchema:
-          - AttributeName: groupId
+          - AttributeName: transactionId
             KeyType: HASH
           - AttributeName: timestamp
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         StreamSpecification:
           StreamViewType: NEW_IMAGE
-        TableName: ${self:provider.environment.IMAGES_TABLE}
+        TableName: ${self:provider.environment.VOUCHER_TABLE}
         GlobalSecondaryIndexes:
-          - IndexName: ${self:provider.environment.IMAGE_ID_INDEX}
+          - IndexName: ${self:provider.environment.VOUCHER_ID_INDEX}
             KeySchema:
-            - AttributeName: imageId
+            - AttributeName: voucherId
               KeyType: HASH
             Projection:
               ProjectionType: ALL
@@ -210,7 +205,7 @@ resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:provider.environment.IMAGES_S3_BUCKET}
+        BucketName: ${self:provider.environment.VOUCHER_S3_BUCKET}
         CorsConfiguration:
           CorsRules:
             -
@@ -237,5 +232,5 @@ resources:
               Effect: Allow
               Principal: '*'
               Action: 's3:GetObject'
-              Resource: 'arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*'
+              Resource: 'arn:aws:s3:::${self:provider.environment.VOUCHER_S3_BUCKET}/*'
         Bucket: !Ref AttachmentsBucket

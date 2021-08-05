@@ -11,7 +11,7 @@ const s3 = new XAWS.S3({
 const bucketName = process.env.IMAGES_S3_BUCKET
 const urlExpiration = Number(process.env.SIGNED_URL_EXPIRATION)
 
-import { TodoItem } from '../../models/TodoItem'
+import { TodoItem } from '../../models/TransactionItem'
 
 export class TodoAccess {
 

@@ -1,6 +1,6 @@
 import * as uuid from 'uuid'
 
-import { TodoItem } from '../../models/TodoItem'
+import { TodoItem } from '../../models/TransactionItem'
 import { TodoAccess } from '../dataLayer/todoAccess'
 import { getUserId } from '../auth/utils'
 
