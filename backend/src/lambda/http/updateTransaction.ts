@@ -2,19 +2,19 @@ import 'source-map-support/register'
 
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 
-import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
-import { updateTodo } from '../businessLogic/todos'
+import { UpdateTransactionRequest } from '../../requests/UpdateTransactionRequest'
+import { updateTransaction } from '../businessLogic/transactions'
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const todoId = event.pathParameters.todoId
-  const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
+  const transactionId = event.pathParameters.todoId
+  const updatedTransaction: UpdateTransactionRequest = JSON.parse(event.body)
 
   // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
   const authorization = event.headers.Authorization
   const split = authorization.split(' ')
   const jwtToken = split[1]
 
-  await updateTodo(updatedTodo, todoId, jwtToken)
+  await updateTransaction(updatedTransaction, transactionId, jwtToken)
 
   return {
     statusCode: 200,

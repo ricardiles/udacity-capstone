@@ -12,8 +12,9 @@ const bucketName = process.env.IMAGES_S3_BUCKET
 const urlExpiration = Number(process.env.SIGNED_URL_EXPIRATION)
 
 import { Transaction } from '../../models/TransactionItem'
+import { TransactionUpdateItem } from '../../models/TransactionUpdateItem'
 
-export class TodoAccess {
+export class TransactionAccess {
 
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
@@ -46,37 +47,33 @@ export class TodoAccess {
     return result
   }
 
-  async createTodo(todo: TodoItem): Promise<TodoItem> {
-    todo = {
-      ...todo,
-      attachmentUrl: `https://${bucketName}.s3.amazonaws.com/${todo.todoId}`
+  async createTransaction(transaction: Transaction): Promise<Transaction> {
+    transaction = {
+      ...transaction,
+      attachmentUrl: `https://${bucketName}.s3.amazonaws.com/${transaction.transactionId}`
     }
     await this.docClient.put({
-      TableName: this.todosTable,
-      Item: todo
+      TableName: this.transactionsTable,
+      Item: transaction
     }).promise()
 
-    return todo
+    return transaction
   }
 
-  async updateTodo(todo: TodoItem): Promise<TodoItem> {
+  async updateTransaction(transactionUpdate: TransactionUpdateItem): Promise<TransactionUpdateItem> {
     
     var params = {
-        TableName : this.todosTable,
+        TableName : this.transactionsTable,
         Key: {
-          "userId": todo.userId,
-          "todoId": todo.todoId
+          "userId": transactionUpdate.userId,
+          "transactionId": transactionUpdate.transactionId
         },
-        UpdateExpression: "SET #name = :name, #done = :done, #dueDate = :due",
+        UpdateExpression: "SET #status = :status",
         ExpressionAttributeNames:{
-          "#name": "name",
-          "#done": "done",
-          "#dueDate": "dueDate"
+          "#status": "status"
         },
         ExpressionAttributeValues:{
-            ":name": todo.name,
-            ":done": todo.done,
-            ":due": todo.dueDate
+            ":status": transactionUpdate.status,
         },
         ReturnValues:"UPDATED_NEW"
     };
@@ -86,25 +83,25 @@ export class TodoAccess {
         } 
     }).promise()
 
-    return todo
+    return transactionUpdate
   }
 
-  async deleteTodo(todoId: string, userId:string): Promise<string> {
+  async deleteTransaction(transactionId: string, userId:string): Promise<string> {
 
     var params = {
         TableName : this.transactionsTable,
         Key:{
-          "todoId": todoId,
+          "transactionId": transactionId,
           "userId": userId
         },
-        ConditionExpression: "#idUser = :user and #idTodo = :todo",
+        ConditionExpression: "#idUser = :user and #transactionId = :transactionId",
         ExpressionAttributeNames:{
             "#idUser": "userId",
-            "#idTodo": "todoId"
+            "#transactionId": "transactionId"
         },
         ExpressionAttributeValues: {
             ":user": userId,
-            ":todo": todoId
+            ":transactionId": transactionId
         }
     };
 
@@ -114,22 +111,22 @@ export class TodoAccess {
         } 
     }).promise()
 
-    return todoId
+    return transactionId
   }
 
-  async generateUploadUrl(todoId: string, userId:string): Promise<string> {
+  async generateUploadUrl(transactionId: string, userId:string): Promise<string> {
     let validated: boolean
 
     var params = {
         TableName : this.transactionsTable,
-        KeyConditionExpression: "#idUser = :user and #idTodo = :todo",
+        KeyConditionExpression: "#idUser = :user and #transactionId = :transactionId",
         ExpressionAttributeNames:{
             "#idUser": "userId",
-            "#idTodo": "todoId"
+            "#transactionId": "transactionId"
         },
         ExpressionAttributeValues: {
             ":user": userId,
-            ":todo": todoId
+            ":todo": transactionId
         }
     };
 
@@ -146,7 +143,7 @@ export class TodoAccess {
     if (validated){
       return await s3.getSignedUrl('putObject', {
         Bucket: bucketName,
-        Key: todoId,
+        Key: transactionId,
         Expires: urlExpiration
       })
     }

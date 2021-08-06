@@ -1,27 +1,17 @@
 import * as uuid from 'uuid'
 
 import { Transaction } from '../../models/TransactionItem'
-import { TodoAccess } from '../dataLayer/transactionAccess'
+import { TransactionAccess } from '../dataLayer/transactionAccess'
 import { getUserId } from '../auth/utils'
+import { CreateTransactionRequest } from '../../requests/CreateTransactionRequest'
+import { UpdateTransactionRequest } from '../../requests/UpdateTransactionRequest'
 
-interface CreateTransactionRequest {
-    amount: string
-    status: string
-    description: string
-    attachmentUrl: string
-  }
 
-  interface UpdateTodoRequest {
-    name: string
-    dueDate: string
-    done: boolean
-  }
-
-const todoAccess = new TodoAccess()
+const transactionAccess = new TransactionAccess()
 
 export async function getTransactions(jwtToken: string): Promise<Transaction[]> {
   const userId = getUserId(jwtToken)
-  return todoAccess.getTransactions(userId)
+  return transactionAccess.getTransactions(userId)
 }
 
 export async function createTransaction(
@@ -32,7 +22,7 @@ export async function createTransaction(
   const itemId = uuid.v4()
   const userId = getUserId(jwtToken)
 
-  const creation = await todoAccess.createTodo({
+  const creation = await transactionAccess.createTransaction({
     transactionId: itemId,
     userId: userId,
     description: createTodoRequest.description,
@@ -43,32 +33,29 @@ export async function createTransaction(
   return creation;
 }
 
-export async function updateTodo(
-  updateTodoRequest: UpdateTodoRequest,
+export async function updateTransaction(
+  updateTodoRequest: UpdateTransactionRequest,
   itemId: string,
   jwtToken: string
 ): Promise<Transaction> {
 
   const userId = getUserId(jwtToken)
-
-  return await todoAccess.updateTodo({
-    todoId: itemId,
+  const updateItem = {
+    transactionId: itemId,
     userId: userId,
-    name: updateTodoRequest.name,
-    dueDate: updateTodoRequest.dueDate,
-    done: updateTodoRequest.done,
-    createdAt: new Date().toISOString()
-  })
+    status: updateTodoRequest.status
+  }
+  return await transactionAccess.updateTransaction(updateItem)
 }
 
-export async function deleteTodo(
-  todoId: string,
+export async function deleteTransaction(
+  transactionId: string,
   jwtToken: string
 ): Promise<String> {
 
   const userId = getUserId(jwtToken)
 
-  return await todoAccess.deleteTodo(todoId, userId)
+  return await transactionAccess.deleteTransaction(transactionId, userId)
 }
 
 export async function generateUploadUrl(
@@ -76,5 +63,5 @@ export async function generateUploadUrl(
   jwtToken: string
 ): Promise<String> {
   const userId = getUserId(jwtToken)
-  return await todoAccess.generateUploadUrl(todoId, userId)
+  return await transactionAccess.generateUploadUrl(todoId, userId)
 }
