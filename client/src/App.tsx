@@ -11,7 +11,7 @@ import { Transactions } from './components/Transactions'
 export interface AppProps {}
 
 export interface AppProps {
-  auth: Auth
+  auth: Auth,
   history: any
 }
 

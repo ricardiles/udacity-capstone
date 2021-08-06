@@ -19,15 +19,15 @@ import Auth from '../auth/Auth'
 import { Transaction } from '../types/Transaction'
 
 interface TransactionProps {
-  auth: Auth
+  auth: Auth,
   history: History
 }
 
 interface TransactionState {
-  transactions: Transaction[]
-  newTransactionDescription: string
-  newAmount: number
-  status: string
+  transactions: Transaction[],
+  newTransactionDescription: string,
+  newAmount: number,
+  status: string,
   loadingTransactions: boolean
 }
 
@@ -99,14 +99,15 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
         loadingTransactions: false
       })
     } catch (e) {
-      alert(`Failed to fetch todos: ${e.message}`)
+      const { message } = e as Error;
+      alert(`Failed to fetch transactions: ${message}`)
     }
   }
 
   render() {
     return (
       <div>
-        <Header as="h1">TODOs</Header>
+        <Header as="h1">Transactions</Header>
 
         {this.renderCreateTransactionInput()}
 
