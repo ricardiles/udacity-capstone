@@ -14,55 +14,59 @@ import {
   Loader
 } from 'semantic-ui-react'
 
-import { createTodo, deleteTodo, getTodos, patchTodo } from '../api/todos-api'
+import { createTransaction, deleteTransaction, getTransaction, patchTransaction } from '../api/todos-api'
 import Auth from '../auth/Auth'
-import { Todo } from '../types/Todo'
+import { Transaction } from '../types/Transaction'
 
-interface TodosProps {
+interface TransactionProps {
   auth: Auth
   history: History
 }
 
-interface TodosState {
-  todos: Todo[]
-  newTodoName: string
-  loadingTodos: boolean
+interface TransactionState {
+  transactions: Transaction[]
+  newTransactionDescription: string
+  newAmount: number
+  status: string
+  loadingTransactions: boolean
 }
 
-export class Todos extends React.PureComponent<TodosProps, TodosState> {
-  state: TodosState = {
-    todos: [],
-    newTodoName: '',
-    loadingTodos: true
+export class Transactions extends React.PureComponent<TransactionProps, TransactionState> {
+  state: TransactionState = {
+    transactions: [],
+    newTransactionDescription: '',
+    newAmount: 0,
+    status: '',
+    loadingTransactions: true
   }
 
-  handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ newTodoName: event.target.value })
+  handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ newTransactionDescription: event.target.value })
   }
 
-  onEditButtonClick = (todoId: string) => {
-    this.props.history.push(`/todos/${todoId}/edit`)
+  onEditButtonClick = (transactionId: string) => {
+    this.props.history.push(`/transactions/${transactionId}/edit`)
   }
 
-  onTodoCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
+  onTransactionCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
     try {
-      const dueDate = this.calculateDueDate()
-      const newTodo = await createTodo(this.props.auth.getIdToken(), {
-        name: this.state.newTodoName,
-        dueDate
+      const newTransaction = await createTransaction(this.props.auth.getIdToken(), {
+        description: this.state.newTransactionDescription,
+        amount: this.state.newAmount,
+        status: this.state.status
       })
       this.setState({
-        todos: [...this.state.todos, newTodo],
-        newTodoName: ''
+        transactions: [...this.state.transactions, newTransaction],
+        newTransactionDescription: ''
       })
     } catch {
-      alert('Todo creation failed')
+      alert('Transaction creation failed')
     }
   }
 
   onTodoDelete = async (todoId: string) => {
     try {
-      await deleteTodo(this.props.auth.getIdToken(), todoId)
+      await deleteTransaction(this.props.auth.getIdToken(), todoId)
       this.setState({
         todos: this.state.todos.filter(todo => todo.todoId != todoId)
       })
@@ -74,7 +78,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
   onTodoCheck = async (pos: number) => {
     try {
       const todo = this.state.todos[pos]
-      await patchTodo(this.props.auth.getIdToken(), todo.todoId, {
+      await patchTransaction(this.props.auth.getIdToken(), todo.todoId, {
         name: todo.name,
         dueDate: todo.dueDate,
         done: !todo.done
@@ -91,7 +95,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
 
   async componentDidMount() {
     try {
-      const todos = await getTodos(this.props.auth.getIdToken())
+      const todos = await getTransaction(this.props.auth.getIdToken())
       this.setState({
         todos,
         loadingTodos: false
@@ -122,13 +126,13 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
               color: 'teal',
               labelPosition: 'left',
               icon: 'add',
-              content: 'New task',
+              content: 'New transaction',
               onClick: this.onTodoCreate
             }}
             fluid
             actionPosition="left"
             placeholder="To change the world..."
-            onChange={this.handleNameChange}
+            onChange={this.handleDescriptionChange}
           />
         </Grid.Column>
         <Grid.Column width={16}>

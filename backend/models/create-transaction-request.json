@@ -1,20 +1,22 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "todo",
+    "title": "transaction",
     "type": "object",
     "properties": {
-      "name": {
+      "description": {
         "type": "string",
         "minLength": 1
       },
-      "dueDate": {
+      "amount": {
+        "type": "number"
+      },
+      "status": {
         "type": "string"
       }
     },
     "required": [
-      "name",
-      "dueDate"
+      "description",
+      "amount"
     ],
-    "additionalProperties": false
+    "additionalProperties": true
   }
-  

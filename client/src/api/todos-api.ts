@@ -1,27 +1,27 @@
 import { apiEndpoint } from '../config'
-import { Todo } from '../types/Todo';
-import { CreateTodoRequest } from '../types/CreateTodoRequest';
+import { Transaction } from '../types/Transaction';
+import { CreateTransactionRequest } from '../types/CreateTransactionRequest';
 import Axios from 'axios'
-import { UpdateTodoRequest } from '../types/UpdateTodoRequest';
+import { UpdateTransactionRequest } from '../types/UpdateTransactionRequest';
 
-export async function getTodos(idToken: string): Promise<Todo[]> {
-  console.log('Fetching todos')
+export async function getTransaction(idToken: string): Promise<Transaction[]> {
+  console.log('Fetching transactions')
 
-  const response = await Axios.get(`${apiEndpoint}/todos`, {
+  const response = await Axios.get(`${apiEndpoint}/transactions`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
     },
   })
-  console.log('Todos:', response.data)
+  console.log('Transactions:', response.data)
   return response.data.items
 }
 
-export async function createTodo(
+export async function createTransaction(
   idToken: string,
-  newTodo: CreateTodoRequest
-): Promise<Todo> {
-  const response = await Axios.post(`${apiEndpoint}/todos`,  JSON.stringify(newTodo), {
+  newTransaction: CreateTransactionRequest
+): Promise<Transaction> {
+  const response = await Axios.post(`${apiEndpoint}/transactions`,  JSON.stringify(newTransaction), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
@@ -30,12 +30,12 @@ export async function createTodo(
   return response.data.item
 }
 
-export async function patchTodo(
+export async function patchTransaction(
   idToken: string,
-  todoId: string,
-  updatedTodo: UpdateTodoRequest
+  transactionId: string,
+  updatedTransaction: UpdateTransactionRequest
 ): Promise<void> {
-  await Axios.patch(`${apiEndpoint}/todos/${todoId}`, JSON.stringify(updatedTodo), {
+  await Axios.patch(`${apiEndpoint}/transactions/${transactionId}`, JSON.stringify(updatedTransaction), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
@@ -43,11 +43,11 @@ export async function patchTodo(
   })
 }
 
-export async function deleteTodo(
+export async function deleteTransaction(
   idToken: string,
-  todoId: string
+  transactionId: string
 ): Promise<void> {
-  await Axios.delete(`${apiEndpoint}/todos/${todoId}`, {
+  await Axios.delete(`${apiEndpoint}/transactions/${transactionId}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
@@ -57,9 +57,9 @@ export async function deleteTodo(
 
 export async function getUploadUrl(
   idToken: string,
-  todoId: string
+  transactionId: string
 ): Promise<string> {
-  const response = await Axios.post(`${apiEndpoint}/todos/${todoId}/attachment`, '', {
+  const response = await Axios.post(`${apiEndpoint}/transactions/${transactionId}/attachment`, '', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`

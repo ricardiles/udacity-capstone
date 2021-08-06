@@ -47,7 +47,6 @@ functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  # TODO: Configure this function
   GetTransactions:
     handler: src/lambda/http/getTransaction.handler
     events:
@@ -63,51 +62,48 @@ functions:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TRANSACTIONS_TABLE}
 
-  # TODO: Configure this function
-  CreateTodo:
-    handler: src/lambda/http/createTodo.handler
+  CreateTransaction:
+    handler: src/lambda/http/createTransaction.handler
     events:
       - http:
           method: post
-          path: todos
+          path: transactions
           cors: true
           authorizer: Auth
           request:
             schema:
-              application/json: ${file(models/create-todo-request.json)}
+              application/json: ${file(models/create-transaction-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TRANSACTIONS_TABLE}
 
-  # TODO: Configure this function
-  UpdateTodo:
-    handler: src/lambda/http/updateTodo.handler
+  UpdateTransaction:
+    handler: src/lambda/http/updateTransaction.handler
     events:
       - http:
           method: patch
-          path: todos/{todoId}
+          path: transactions/{transactionId}
           cors: true
           authorizer: Auth
           request:
             schema:
-              application/json: ${file(models/update-todo-request.json)}
+              application/json: ${file(models/update-transaction-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:UpdateItem
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TRANSACTIONS_TABLE}
 
-  # TODO: Configure this function
-  DeleteTodo:
-    handler: src/lambda/http/deleteTodo.handler
+  DeleteTransaction:
+    handler: src/lambda/http/deleteTransaction.handler
     events:
       - http:
           method: delete
-          path: todos/{todoId}
+          path: transactions/{transactionid}
           cors: true
           authorizer: Auth
     iamRoleStatements:
@@ -115,7 +111,7 @@ functions:
         Action:
           - dynamodb:DeleteItem
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TRANSACTIONS_TABLE}
 
   # TODO: Configure this function
   GenerateUploadUrl:
@@ -124,7 +120,7 @@ functions:
       - http:
           method: post
           cors: true
-          path: todos/{todoId}/attachment
+          path: transactions/{transactionid}/attachment
     iamRoleStatements:
       - Effect: Allow
         Action:
