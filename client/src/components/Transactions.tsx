@@ -64,41 +64,39 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     }
   }
 
-  onTodoDelete = async (todoId: string) => {
+  onTransactionDelete = async (transactionId: string) => {
     try {
-      await deleteTransaction(this.props.auth.getIdToken(), todoId)
+      await deleteTransaction(this.props.auth.getIdToken(), transactionId)
       this.setState({
-        todos: this.state.todos.filter(todo => todo.todoId != todoId)
+        transactions: this.state.transactions.filter(transaction => transaction.transactionId != transactionId)
       })
     } catch {
-      alert('Todo deletion failed')
+      alert('Transaction deletion failed')
     }
   }
 
-  onTodoCheck = async (pos: number) => {
+  onTransactionCheck = async (pos: number) => {
     try {
-      const todo = this.state.todos[pos]
-      await patchTransaction(this.props.auth.getIdToken(), todo.todoId, {
-        name: todo.name,
-        dueDate: todo.dueDate,
-        done: !todo.done
+      const transaction = this.state.transactions[pos]
+      await patchTransaction(this.props.auth.getIdToken(), transaction.transactionId, {
+        status: transaction.status
       })
       this.setState({
-        todos: update(this.state.todos, {
-          [pos]: { done: { $set: !todo.done } }
+        transactions: update(this.state.transactions, {
+          [pos]: { status: { $set: transaction.status } }
         })
       })
     } catch {
-      alert('Todo deletion failed')
+      alert('Transactions check failed')
     }
   }
 
   async componentDidMount() {
     try {
-      const todos = await getTransaction(this.props.auth.getIdToken())
+      const transactions = await getTransaction(this.props.auth.getIdToken())
       this.setState({
-        todos,
-        loadingTodos: false
+        transactions,
+        loadingTransactions: false
       })
     } catch (e) {
       alert(`Failed to fetch todos: ${e.message}`)
@@ -110,14 +108,14 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
       <div>
         <Header as="h1">TODOs</Header>
 
-        {this.renderCreateTodoInput()}
+        {this.renderCreateTransactionInput()}
 
-        {this.renderTodos()}
+        {this.renderTransactions()}
       </div>
     )
   }
 
-  renderCreateTodoInput() {
+  renderCreateTransactionInput() {
     return (
       <Grid.Row>
         <Grid.Column width={16}>
@@ -127,7 +125,7 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
               labelPosition: 'left',
               icon: 'add',
               content: 'New transaction',
-              onClick: this.onTodoCreate
+              onClick: this.onTransactionCreate
             }}
             fluid
             actionPosition="left"
@@ -142,47 +140,44 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     )
   }
 
-  renderTodos() {
-    if (this.state.loadingTodos) {
+  renderTransactions() {
+    if (this.state.loadingTransactions) {
       return this.renderLoading()
     }
 
-    return this.renderTodosList()
+    return this.renderTransactionsList()
   }
 
   renderLoading() {
     return (
       <Grid.Row>
         <Loader indeterminate active inline="centered">
-          Loading TODOs
+          Loading Transactions
         </Loader>
       </Grid.Row>
     )
   }
 
-  renderTodosList() {
+  renderTransactionsList() {
     return (
       <Grid padded>
-        {this.state.todos.map((todo, pos) => {
+        {this.state.transactions.map((transaction, pos) => {
           return (
-            <Grid.Row key={todo.todoId}>
+            <Grid.Row key={transaction.transactionId}>
               <Grid.Column width={1} verticalAlign="middle">
                 <Checkbox
-                  onChange={() => this.onTodoCheck(pos)}
-                  checked={todo.done}
+                  onChange={() => this.onTransactionCheck(pos)}
+                  checked = {true}
                 />
               </Grid.Column>
               <Grid.Column width={10} verticalAlign="middle">
-                {todo.name}
-              </Grid.Column>
-              <Grid.Column width={3} floated="right">
-                {todo.dueDate}
+                {transaction.description}
               </Grid.Column>
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(todo.todoId)}
+                  onClick={() => this.onEditButtonClick(transaction.transactionId)}
                 >
                   <Icon name="pencil" />
                 </Button>
@@ -191,13 +186,13 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
                 <Button
                   icon
                   color="red"
-                  onClick={() => this.onTodoDelete(todo.todoId)}
+                  onClick={() => this.onTransactionDelete(transaction.transactionId)}
                 >
                   <Icon name="delete" />
                 </Button>
               </Grid.Column>
-              {todo.attachmentUrl && (
-                <Image src={todo.attachmentUrl} size="small" wrapped />
+              {transaction.attachmentUrl && (
+                <Image src={transaction.attachmentUrl} size="small" wrapped />
               )}
               <Grid.Column width={16}>
                 <Divider />
