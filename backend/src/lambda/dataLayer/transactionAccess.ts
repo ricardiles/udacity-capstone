@@ -8,7 +8,7 @@ const s3 = new XAWS.S3({
   signatureVersion: 'v4'
 })
 
-const bucketName = process.env.IMAGES_S3_BUCKET
+const bucketName = process.env.VOUCHER_S3_BUCKET
 const urlExpiration = Number(process.env.SIGNED_URL_EXPIRATION)
 
 import { Transaction } from '../../models/TransactionItem'

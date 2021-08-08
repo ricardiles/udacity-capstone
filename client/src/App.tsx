@@ -41,6 +41,7 @@ export default class App extends Component<AppProps, AppState> {
             <Grid.Row>
               <Grid.Column width={16}>
                 <Router history={this.props.history}>
+                  {this.generateTitle()}
                   {this.generateMenu()}
 
                   {this.generateCurrentPage()}
@@ -50,6 +51,12 @@ export default class App extends Component<AppProps, AppState> {
           </Grid>
         </Segment>
       </div>
+    )
+  }
+
+  generateTitle() {
+    return (
+      <h2>Ricardo Ardiles Capstone</h2>
     )
   }
 

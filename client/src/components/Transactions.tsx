@@ -1,6 +1,8 @@
 import dateFormat from 'dateformat'
 import { History } from 'history'
 import update from 'immutability-helper'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import * as React from 'react'
 import {
   Button,
@@ -10,13 +12,19 @@ import {
   Header,
   Icon,
   Input,
+  Select,
   Image,
   Loader
 } from 'semantic-ui-react'
 
-import { createTransaction, deleteTransaction, getTransaction, patchTransaction } from '../api/todos-api'
+import { createTransaction, deleteTransaction, getTransaction, patchTransaction } from '../api/transactions-api'
 import Auth from '../auth/Auth'
 import { Transaction } from '../types/Transaction'
+
+const options = [
+  'one', 'two', 'three'
+];
+const defaultOption = options[0];
 
 interface TransactionProps {
   auth: Auth,
@@ -26,7 +34,7 @@ interface TransactionProps {
 interface TransactionState {
   transactions: Transaction[],
   newTransactionDescription: string,
-  newAmount: number,
+  newAmount: string,
   status: string,
   loadingTransactions: boolean
 }
@@ -35,13 +43,21 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
   state: TransactionState = {
     transactions: [],
     newTransactionDescription: '',
-    newAmount: 0,
+    newAmount: '',
     status: '',
     loadingTransactions: true
   }
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ newTransactionDescription: event.target.value })
+  }
+
+  handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ newAmount: event.target.value})
+  }
+
+  handleStatusChange = (event:any) => {
+    this.setState({ status: event.value})
   }
 
   onEditButtonClick = (transactionId: string) => {
@@ -52,7 +68,7 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     try {
       const newTransaction = await createTransaction(this.props.auth.getIdToken(), {
         description: this.state.newTransactionDescription,
-        amount: this.state.newAmount,
+        amount: Number(this.state.newAmount),
         status: this.state.status
       })
       this.setState({
@@ -99,18 +115,19 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
         loadingTransactions: false
       })
     } catch (e) {
-      const { message } = e as Error;
-      alert(`Failed to fetch transactions: ${message}`)
+      console.log(e);
+      alert('Failed to fetch transactions')
     }
   }
 
   render() {
     return (
       <div>
-        <Header as="h1">Transactions</Header>
+        <Header as="h2">New Transaction</Header>
 
         {this.renderCreateTransactionInput()}
 
+        <Header as="h1">Transactions</Header>
         {this.renderTransactions()}
       </div>
     )
@@ -121,16 +138,28 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
       <Grid.Row>
         <Grid.Column width={16}>
           <Input
+              fluid
+              actionPosition="left"
+              placeholder="Amount of transaction"
+              onChange={this.handleAmountChange}
+          />
+          <Dropdown 
+              options={options} 
+              onChange={this.handleStatusChange}
+              value={defaultOption} 
+              placeholder="Select an option" 
+          />
+          <Input
             action={{
-              color: 'teal',
+              color: 'blue',
               labelPosition: 'left',
               icon: 'add',
-              content: 'New transaction',
+              content: 'Add',
               onClick: this.onTransactionCreate
             }}
             fluid
             actionPosition="left"
-            placeholder="To change the world..."
+            placeholder="Description of transaction..."
             onChange={this.handleDescriptionChange}
           />
         </Grid.Column>
@@ -206,9 +235,9 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
   }
 
   calculateDueDate(): string {
-    const date = new Date()
-    date.setDate(date.getDate() + 7)
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
 
-    return dateFormat(date, 'yyyy-mm-dd') as string
+    return dateFormat(date, 'yyyy-mm-dd');
   }
 }
