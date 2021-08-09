@@ -5,7 +5,6 @@ import 'react-dropdown/style.css';
 import * as React from 'react'
 import {
   Button,
-  Checkbox,
   Divider,
   Grid,
   Header,
@@ -58,8 +57,11 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     this.setState({ status: event.value})
   }
 
-  onEditButtonClick = (transactionId: string) => {
-    this.props.history.push(`/transactions/${transactionId}/edit`)
+  onEditButtonClick = (transactionId: string, status:string) => {
+    this.props.history.push({
+      pathname: `/transactions/${transactionId}/edit`,
+      state: { detail: status }
+    })
   }
 
   onEditFileButtonClick = (transactionId: string) => {
@@ -212,7 +214,7 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(transaction.transactionId)}
+                  onClick={() => this.onEditButtonClick(transaction.transactionId, transaction.status)}
                 >
                   <Icon name="pencil" />
                 </Button>
