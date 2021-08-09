@@ -12,7 +12,7 @@ enum UploadState {
 interface EditTodoProps {
   match: {
     params: {
-      todoId: string
+      transactionId: string
     }
   }
   auth: Auth
@@ -23,7 +23,7 @@ interface EditTodoState {
   uploadState: UploadState
 }
 
-export class EditTodo extends React.PureComponent<
+export class EditFile extends React.PureComponent<
   EditTodoProps,
   EditTodoState
 > {
@@ -51,12 +51,13 @@ export class EditTodo extends React.PureComponent<
       }
 
       this.setUploadState(UploadState.FetchingPresignedUrl)
-      const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.todoId)
+      const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.transactionId)
 
       this.setUploadState(UploadState.UploadingFile)
       await uploadFile(uploadUrl, this.state.file)
 
-      alert('File was uploaded!')
+      alert('File was uploaded!');
+      
     } catch (e) {
       alert('Could not upload a file: ' + e.message)
     } finally {
@@ -73,15 +74,15 @@ export class EditTodo extends React.PureComponent<
   render() {
     return (
       <div>
-        <h1>Upload new image</h1>
+        <h1>Upload new Voucher</h1>
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>File</label>
             <input
               type="file"
-              accept="image/*"
-              placeholder="Image to upload"
+              accept="image/*, .pdf"
+              placeholder="Voucher to upload"
               onChange={this.handleFileChange}
             />
           </Form.Field>

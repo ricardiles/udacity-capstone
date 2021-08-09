@@ -1,4 +1,3 @@
-import dateFormat from 'dateformat'
 import { History } from 'history'
 import update from 'immutability-helper'
 import Dropdown from 'react-dropdown';
@@ -12,7 +11,6 @@ import {
   Header,
   Icon,
   Input,
-  Select,
   Image,
   Loader
 } from 'semantic-ui-react'
@@ -22,9 +20,9 @@ import Auth from '../auth/Auth'
 import { Transaction } from '../types/Transaction'
 
 const options = [
-  'one', 'two', 'three'
+  'Pending', 'Completed', 'Canceled'
 ];
-const defaultOption = options[0];
+const defaultOption = '';
 
 interface TransactionProps {
   auth: Auth,
@@ -64,6 +62,14 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     this.props.history.push(`/transactions/${transactionId}/edit`)
   }
 
+  onEditFileButtonClick = (transactionId: string) => {
+    this.props.history.push(`/transactions/${transactionId}/file`)
+  }
+
+  addDefaultSrc(ev:any){
+    ev.target.src = 'https://udacity-capstone-ardiles-dev.s3.us-west-2.amazonaws.com/file-not-found--v1.png'
+  }
+
   onTransactionCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
     try {
       const newTransaction = await createTransaction(this.props.auth.getIdToken(), {
@@ -84,7 +90,7 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     try {
       await deleteTransaction(this.props.auth.getIdToken(), transactionId)
       this.setState({
-        transactions: this.state.transactions.filter(transaction => transaction.transactionId != transactionId)
+        transactions: this.state.transactions.filter(transaction => transaction.transactionId !== transactionId)
       })
     } catch {
       alert('Transaction deletion failed')
@@ -129,6 +135,9 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
 
         <Header as="h1">Transactions</Header>
         {this.renderTransactions()}
+
+        <Header as="h1">Total</Header>
+        {this.renderTransactionsTotal()}
       </div>
     )
   }
@@ -147,7 +156,7 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
               options={options} 
               onChange={this.handleStatusChange}
               value={defaultOption} 
-              placeholder="Select an option" 
+              placeholder="Select a status" 
           />
           <Input
             action={{
@@ -194,14 +203,10 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
         {this.state.transactions.map((transaction, pos) => {
           return (
             <Grid.Row key={transaction.transactionId}>
-              <Grid.Column width={1} verticalAlign="middle">
-                <Checkbox
-                  onChange={() => this.onTransactionCheck(pos)}
-                  checked = {true}
-                />
-              </Grid.Column>
               <Grid.Column width={10} verticalAlign="middle">
-                {transaction.description}
+                <p><strong>Description:</strong> {transaction.description}</p>
+                <p><strong>Amount:</strong> {transaction.amount}</p>
+                <p><strong>Status:</strong> {transaction.status}</p>
               </Grid.Column>
               <Grid.Column width={1} floated="right">
                 <Button
@@ -215,6 +220,15 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
+                  color="blue"
+                  onClick={() => this.onEditFileButtonClick(transaction.transactionId)}
+                >
+                  <Icon name="file" />
+                </Button>
+              </Grid.Column>
+              <Grid.Column width={1} floated="right">
+                <Button
+                  icon
                   color="red"
                   onClick={() => this.onTransactionDelete(transaction.transactionId)}
                 >
@@ -222,7 +236,7 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
                 </Button>
               </Grid.Column>
               {transaction.attachmentUrl && (
-                <Image src={transaction.attachmentUrl} size="small" wrapped />
+                <Image src={transaction.attachmentUrl} size="small" wrapped  onError={this.addDefaultSrc}/>
               )}
               <Grid.Column width={16}>
                 <Divider />
@@ -234,10 +248,25 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     )
   }
 
-  calculateDueDate(): string {
-    const date = new Date();
-    date.setDate(date.getDate() + 7);
+  renderTransactionsTotal() {
+    return (
+      <Grid padded>
+        <Grid.Row>
+          <Grid.Column width={1} verticalAlign="middle">
+            {this.calculateTotal}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    )
+  }
 
-    return dateFormat(date, 'yyyy-mm-dd');
+  calculateTotal(): number {
+    var total = 0
+    this.state.transactions.map((transaction, pos) => {
+      console.log(pos);
+      total = total + transaction.amount
+      return total;
+    });
+    return total;
   }
 }

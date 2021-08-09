@@ -59,9 +59,10 @@ export async function deleteTransaction(
 }
 
 export async function generateUploadUrl(
-  todoId: string,
+  transactionId: string,
   jwtToken: string
 ): Promise<String> {
   const userId = getUserId(jwtToken)
-  return await transactionAccess.generateUploadUrl(todoId, userId)
+  console.log("generateUploadUrl");
+  return await transactionAccess.generateUploadUrl(transactionId, userId)
 }

@@ -5,7 +5,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } f
 import { deleteTransaction } from '../businessLogic/transactions'
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const transactionId = event.pathParameters.transactionId
+  const transactionId = event.pathParameters.transactionid
 
   // TODO: Remove a TODO item by id
   const authorization = event.headers.Authorization

@@ -126,7 +126,7 @@ export class TransactionAccess {
         },
         ExpressionAttributeValues: {
             ":user": userId,
-            ":todo": transactionId
+            ":transactionId": transactionId
         }
     };
 

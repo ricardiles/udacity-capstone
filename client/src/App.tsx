@@ -3,7 +3,8 @@ import { Link, Route, Router, Switch } from 'react-router-dom'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
 
 import Auth from './auth/Auth'
-import { EditTodo } from './components/EditTodo'
+import { EditTransaction} from './components/EditTransaction'
+import { EditFile } from './components/EditFile'
 import { LogIn } from './components/LogIn'
 import { NotFound } from './components/NotFound'
 import { Transactions } from './components/Transactions'
@@ -107,7 +108,15 @@ export default class App extends Component<AppProps, AppState> {
           path="/transactions/:transactionId/edit"
           exact
           render={props => {
-            return <EditTodo {...props} auth={this.props.auth} />
+            return <EditTransaction {...props} auth={this.props.auth} />
+          }}
+        />
+
+        <Route
+          path="/transactions/:transactionId/file"
+          exact
+          render={props => {
+            return <EditFile {...props} auth={this.props.auth} />
           }}
         />
 

@@ -85,7 +85,7 @@ functions:
     events:
       - http:
           method: patch
-          path: transactions/{transactionId}
+          path: transactions/{transactionid}
           cors: true
           authorizer: Auth
           request:
@@ -127,6 +127,10 @@ functions:
           - dynamodb:GetItem
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VOUCHER_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TRANSACTIONS_TABLE}
       - Effect: Allow
         Action:
           - s3:PutObject

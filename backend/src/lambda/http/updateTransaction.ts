@@ -6,7 +6,7 @@ import { UpdateTransactionRequest } from '../../requests/UpdateTransactionReques
 import { updateTransaction } from '../businessLogic/transactions'
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const transactionId = event.pathParameters.todoId
+  const transactionId = event.pathParameters.transactionid
   const updatedTransaction: UpdateTransactionRequest = JSON.parse(event.body)
 
   // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
