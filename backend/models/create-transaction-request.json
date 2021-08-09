@@ -8,7 +8,7 @@
         "minLength": 1
       },
       "amount": {
-        "type": "number"
+        "type": "string"
       },
       "status": {
         "type": "string"

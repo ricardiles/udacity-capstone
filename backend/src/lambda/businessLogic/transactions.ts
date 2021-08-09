@@ -34,7 +34,7 @@ export async function createTransaction(
 }
 
 export async function updateTransaction(
-  updateTodoRequest: UpdateTransactionRequest,
+  updateTransactionRequest: UpdateTransactionRequest,
   itemId: string,
   jwtToken: string
 ): Promise<Transaction> {
@@ -43,7 +43,9 @@ export async function updateTransaction(
   const updateItem = {
     transactionId: itemId,
     userId: userId,
-    status: updateTodoRequest.status
+    status: updateTransactionRequest.status,
+    description: updateTransactionRequest.description,
+    amount: updateTransactionRequest.amount
   }
   return await transactionAccess.updateTransaction(updateItem)
 }

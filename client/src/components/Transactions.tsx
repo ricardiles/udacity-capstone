@@ -57,10 +57,10 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     this.setState({ status: event.value})
   }
 
-  onEditButtonClick = (transactionId: string, status:string) => {
+  onEditButtonClick = (transactionId: string, status:string, amount:string, description:string) => {
     this.props.history.push({
       pathname: `/transactions/${transactionId}/edit`,
-      state: { detail: status }
+      state: { detail: status, amount: amount, description: description }
     })
   }
 
@@ -76,12 +76,13 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
     try {
       const newTransaction = await createTransaction(this.props.auth.getIdToken(), {
         description: this.state.newTransactionDescription,
-        amount: Number(this.state.newAmount),
+        amount: this.state.newAmount,
         status: this.state.status
       })
       this.setState({
         transactions: [...this.state.transactions, newTransaction],
-        newTransactionDescription: ''
+        newTransactionDescription: this.state.newTransactionDescription,
+        newAmount: this.state.newAmount
       })
     } catch {
       alert('Transaction creation failed')
@@ -138,8 +139,6 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
         <Header as="h1">Transactions</Header>
         {this.renderTransactions()}
 
-        <Header as="h1">Total</Header>
-        {this.renderTransactionsTotal()}
       </div>
     )
   }
@@ -207,14 +206,14 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
             <Grid.Row key={transaction.transactionId}>
               <Grid.Column width={10} verticalAlign="middle">
                 <p><strong>Description:</strong> {transaction.description}</p>
-                <p><strong>Amount:</strong> {transaction.amount}</p>
+                <p><strong>Amount:</strong> {String(transaction.amount)}</p>
                 <p><strong>Status:</strong> {transaction.status}</p>
               </Grid.Column>
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(transaction.transactionId, transaction.status)}
+                  onClick={() => this.onEditButtonClick(transaction.transactionId, transaction.status, String(transaction.amount), String(transaction.description))}
                 >
                   <Icon name="pencil" />
                 </Button>
@@ -246,29 +245,59 @@ export class Transactions extends React.PureComponent<TransactionProps, Transact
             </Grid.Row>
           )
         })}
-      </Grid>
-    )
-  }
 
-  renderTransactionsTotal() {
-    return (
-      <Grid padded>
+        <Header as="h2">Total Completed: {this.calculateTotalCompleted()}</Header>
+        <Header as="h2">Total Pending: {this.calculateTotalPending()}</Header>
+        <Header as="h2">Total Canceled: {this.calculateTotalCanceled()}</Header>
         <Grid.Row>
-          <Grid.Column width={1} verticalAlign="middle">
-            {this.calculateTotal}
+          <Grid.Column>
+            <Header as="h2">Total Amount: {this.calculateTotal()}</Header>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     )
   }
 
-  calculateTotal(): number {
+  calculateTotal(): string {
     var total = 0
     this.state.transactions.map((transaction, pos) => {
-      console.log(pos);
-      total = total + transaction.amount
-      return total;
+      total = total + Number(transaction.amount)
+      return String(total);
     });
-    return total;
+    return String(total);
   }
+
+  calculateTotalPending(): string {
+    var total = 0
+    this.state.transactions.map((transaction, pos) => {
+      if(transaction.status === "Pending"){
+        total = total + Number(transaction.amount)
+      }
+      return String(total);
+    });
+    return String(total);
+  }
+
+  calculateTotalCompleted(): string {
+    var total = 0
+    this.state.transactions.map((transaction, pos) => {
+      if(transaction.status === "Completed"){
+        total = total + Number(transaction.amount)
+      }
+      return String(total);
+    });
+    return String(total);
+  }
+
+  calculateTotalCanceled(): string {
+    var total = 0
+    this.state.transactions.map((transaction, pos) => {
+      if(transaction.status === "Canceled"){
+        total = total + Number(transaction.amount)
+      }
+      return String(total);
+    });
+    return String(total);
+  }
+
 }

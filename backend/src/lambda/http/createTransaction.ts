@@ -27,6 +27,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         "transactionId": item.transactionId,
         "createdAt": item.createdAt,
         "status": item.status,
+        "amount": item.amount,
         "description": item.description,
         "attachmentUrl": item.attachmentUrl
       }

@@ -1,6 +1,7 @@
 import * as React from 'react'
+import { History } from 'history'
 import Auth from '../auth/Auth'
-import { getUploadUrl, uploadFile } from '../api/transactions-api'
+import { patchTransaction } from '../api/transactions-api'
 import {
   Form,
   Button,
@@ -16,9 +17,11 @@ import {
 import Dropdown from 'react-dropdown';
 
 enum UploadState {
-  NoStatus,
-  Status
+  Status,
+  Description,
+  Amount
 }
+
 
 interface TransactionState {
   newTransactionDescription: string,
@@ -38,24 +41,37 @@ interface EditTodoProps {
     }
   },
   location: any
-  auth: Auth
+  auth: Auth,
+  history: History
 }
 
 interface EditTransactionState {
   transactions: any
   newTransactionDescription: string,
   newAmount: string,
-  status: UploadState,
+  status: string,
   loadingTransactions: boolean
 }
 
 export class EditTransaction extends React.PureComponent<EditTodoProps, EditTransactionState> {
   state: EditTransactionState = {
     transactions: [],
-    newTransactionDescription: '',
-    newAmount: '',
-    status: UploadState.Status,
+    newTransactionDescription: this.props.location.state.description,
+    newAmount: this.props.location.state.amount,
+    status: this.props.location.state.detail,
     loadingTransactions: true
+  }
+
+  handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ newTransactionDescription: event.target.value })
+  }
+
+  handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ newAmount: event.target.value })
+  }
+
+  handleStatusChange = (event:any) => {
+    this.setState({ status: event.value})
   }
 
   handleSubmit = async (event: React.SyntheticEvent) => {
@@ -67,25 +83,28 @@ export class EditTransaction extends React.PureComponent<EditTodoProps, EditTran
         return
       }
 
-      this.setUploadState(UploadState.Status)
-      //const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.transactionId)
+      if (!this.state.newAmount){
+        this.state.newAmount = this.props.location.state.amount
+      }
 
-      //this.setUploadState(UploadState.UploadingFile)
-      //await uploadFile(uploadUrl, this.state.file)
+      if (!this.state.newTransactionDescription){
+        this.state.newTransactionDescription = this.props.location.state.newTransactionDescription
+      }
 
-      alert('File was uploaded!');
+      const updateData = {
+        status: this.state.status,
+        amount: this.state.newAmount,
+        description: this.state.newTransactionDescription
+      }
+      const updateTransaction = await patchTransaction(this.props.auth.getIdToken(), this.props.match.params.transactionId, updateData);
+      alert('Transaction updated');
+      this.props.history.push({
+        pathname: `/`,
+      })
       
-    } catch {
-      alert('Could not upload a file')
-    } finally {
-      this.setUploadState(UploadState.Status)
-    }
-  }
-
-  setUploadState(status: UploadState) {
-    this.setState({
-      status
-    })
+    } catch (e) {
+      alert('Could not upload a file' + e.message);
+    } 
   }
 
   render() {
@@ -95,10 +114,23 @@ export class EditTransaction extends React.PureComponent<EditTodoProps, EditTran
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
+            <label>Description</label>
+            <Input
+              fluid
+              defaultValue={this.props.location.state.description} 
+              onChange={this.handleDescriptionChange}
+            />
+            <label>Amount</label>
+            <Input
+              fluid
+              defaultValue={this.props.location.state.amount} 
+              onChange={this.handleAmountChange}
+            />
             <label>Status</label>
             <Dropdown 
                 options={options} 
                 value={this.props.location.state.detail} 
+                onChange={this.handleStatusChange}
             />
           </Form.Field>
 

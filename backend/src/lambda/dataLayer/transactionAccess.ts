@@ -68,12 +68,16 @@ export class TransactionAccess {
           "userId": transactionUpdate.userId,
           "transactionId": transactionUpdate.transactionId
         },
-        UpdateExpression: "SET #status = :status",
+        UpdateExpression: "SET #status = :status, #description = :description, #amount = :amount",
         ExpressionAttributeNames:{
-          "#status": "status"
+          "#status": "status",
+          "#description": "description",
+          "#amount": "amount"
         },
         ExpressionAttributeValues:{
             ":status": transactionUpdate.status,
+            ":description": transactionUpdate.description,
+            ":amount": Number(transactionUpdate.amount)
         },
         ReturnValues:"UPDATED_NEW"
     };

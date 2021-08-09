@@ -1,5 +1,5 @@
 export interface CreateTransactionRequest {
-    amount: number,
+    amount: string,
     status: string,
     description: string
   }

@@ -1,3 +1,5 @@
 export interface UpdateTransactionRequest {
-    status: string
+    status: string,
+    amount?: string,
+    description?: string
   }
