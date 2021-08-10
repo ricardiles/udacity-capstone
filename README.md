@@ -112,7 +112,7 @@ I used folder structure learned in class:
 
 In the top of the repository there is a postman collection
 ```
-Final Project.postman_collection.json
+Udacity Capstone.postman_collection.json
 ```
 That contains examples of the use of the endpoints and examples generated.
 
@@ -123,27 +123,18 @@ Images folder contains evidence of the operation and deployment of the applicati
 * Auth0 - Configuration.png
 * Auth0 - Login
 
+* AWS - ApiGateway.png
+* AWS - X Ray analytics.png
+* AWS - X Ray map.png
+* AWS - X Ray traces.png
+
 * Client - Login.png
 * Client - New user.png
 * Client - New transaction.png
 * Client - Update transaction.png
+* Client - Delete transaction.png
+* Client - Voucher transaction.png
+* Client - Voucher transaction2.png
 
-
-* AWS - ApiGateway
-* AWS - CloudFormation
-* AWS - X Ray Analytics
-* AWS - X Ray Map
-* AWS - X Ray Traces
-* Postman - CreateTodo Validation
-* Postman - CreateTodo
-* Postman - DeleteTodo
-* Postman - Get Attachment URL signed url
-* Postman - Get Attachment URL
-* Postman - GetTodos
-* Postman - UpdateTodo Validation
-* Postman - UpdateTodo
-* Web - Check Todo
-* Web - First Todo
-* Web - Upload Image1
-* Web - Upload Image2
-* Web - Upload Image3
+* CloudFormation - Backend.png
+* Elastic Beanstalk - Client.png

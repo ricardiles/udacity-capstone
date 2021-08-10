@@ -1,0 +1,539 @@
+{
+	"info": {
+		"_postman_id": "b72fa642-6d8e-428a-bb07-fa25601543e5",
+		"name": "Udacity Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikp4TDI2REpFTFRrWTVKTE55UVVYZyJ9.eyJpc3MiOiJodHRwczovL2Rldi12aXd3b3g3ei51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQxNDM1ODUzMTg3NDY2OTgwNjUiLCJhdWQiOiJlVURwNUZyb2I5SGRZdWVkTnl5eklkVTBjZk9jajk0OCIsImlhdCI6MTYyODQ1NTM1MCwiZXhwIjoxNjI4NDkxMzUwLCJhdF9oYXNoIjoiOGJTVVRGWjU3OHd0VzhIQ3ZSZEZIZyIsIm5vbmNlIjoiTlV1b2lzNTVSTGJRYzAtMWV2aWhLQl9VMWI5WTRPVkoifQ.GbZwHKiZ35xgSy8gAoHzcMcvyEqNCUgcBLIhRKfFCiecHqqaN6c1O9csCYK_pgNJI59bj-zr1DiQIJhR-k6dRQzbRTwzVIpT3gpeeVie1-wdc0XQlplu2QI0EF0bzSdVmgTlNU0qI_O2M15-dOq3e6BfSx_MTNyoOGI5JZ88edHj8P2SmmUj2kyPwA9d7rmVRHlN83Qoz6BjwxoQW8GGOgrk-d0DUy3ElO8OhZmtP10fY9_Qet6hWqUxrzHGAIIGfsQrXqJ7tfNqvp25uOWwCaAYCCbBVygfFuT-h-8ln09NmpP54q8Ish98Du6-sM0mAeV0l7ZsX0oyOC4Yuv6u1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions",
+					"protocol": "https",
+					"host": [
+						"9aghsuepzh",
+						"execute-api",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"transactions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "transactions",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions",
+							"protocol": "https",
+							"host": [
+								"9aghsuepzh",
+								"execute-api",
+								"us-west-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"transactions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "298"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 08 Aug 2021 20:43:20 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "349cf89f-d3a0-4ec2-920b-982c3a343c38"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "Dw88XECgvHcF4iw="
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-611041e8-3068c4fc37c403ab5ecf68d6"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 c92f00b9024bffb76e013e5e0c0b7c48.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SCL50-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "W1YauVSQpdgjOgOSTu7iSOSfI0osJesIhbbXMN5wse0ZrhNTBfkdHA=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"items\": [\n        {\n            \"attachmentUrl\": \"https://undefined.s3.amazonaws.com/cdc46294-66e4-4f5f-868b-97ef6df40062\",\n            \"userId\": \"google-oauth2|114143585318746698065\",\n            \"status\": \"\",\n            \"createdAt\": \"2021-08-06T04:07:56.190Z\",\n            \"amount\": 0,\n            \"description\": \"Minimarket 100\",\n            \"transactionId\": \"cdc46294-66e4-4f5f-868b-97ef6df40062\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikp4TDI2REpFTFRrWTVKTE55UVVYZyJ9.eyJpc3MiOiJodHRwczovL2Rldi12aXd3b3g3ei51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQxNDM1ODUzMTg3NDY2OTgwNjUiLCJhdWQiOiJlVURwNUZyb2I5SGRZdWVkTnl5eklkVTBjZk9jajk0OCIsImlhdCI6MTYyODU1NzkyOCwiZXhwIjoxNjI4NTkzOTI4LCJhdF9oYXNoIjoiVXdJZlprck1oQW9DY3llc0lFM3ZjUSIsIm5vbmNlIjoiR0tlTHpKY1RDcHhpUGIybmt0aGdhdTAzSmE1Tzk4VkkifQ.gngT8o2G5RU6f9H7Qe-Ef4HyTJ1I0HHVFRKb_uhUQpLL681uaNvDAJciHbvGmjlREPvUEGAYUSww61SQzGWX8wrZne_67A0kI_VnWqf7XsGbqkV_dVUy3LWIzTvkGmTBaVvF-RZToJQ5B0t36dbChDKcpQ60CsLJPAoH44DC8M996QKUo9pDVBqMVrjBWDdcrPajtBp_boybPWTISN8UninsRCWXmsm5sFF_pbearbrqVPlC5tB0UM9JtKYF0EoFqbNfYJBzNz8dwdBgGE1obrKvwzTDKxFg452kDiWuGHGpWaRMeKiYXJek8Mg8ljiFCf6rcxIwR4zDu1iXroz1_A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": \"1000\",\n    \"description\": \"Bread\",\n    \"status\": \"Completed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions/0b56761f-f3c5-4089-89d0-5d50b36ecd04",
+					"protocol": "https",
+					"host": [
+						"9aghsuepzh",
+						"execute-api",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"transactions",
+						"0b56761f-f3c5-4089-89d0-5d50b36ecd04"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "transactions",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": \"1000\",\n    \"description\": \"Bread\",\n    \"status\": \"Completed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions/0b56761f-f3c5-4089-89d0-5d50b36ecd04",
+							"protocol": "https",
+							"host": [
+								"9aghsuepzh",
+								"execute-api",
+								"us-west-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"transactions",
+								"0b56761f-f3c5-4089-89d0-5d50b36ecd04"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Aug 2021 01:13:44 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "04899b1b-d321-47ed-b2fa-1d1a178a1256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Accept-Patch",
+							"value": "application/json"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "D03fWETovHcF4iw="
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT"
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-6111d2c8-456cc98247cf85da7d8493c3"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 b37cc7ef8dedff2c0260690fd3934220.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SCL50-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "bktMDBT-gJit6e_A7BAkBh-BSumyRoj0uWHADBlQ1fm8S-zNLwKG2w=="
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				}
+			]
+		},
+		{
+			"name": "transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikp4TDI2REpFTFRrWTVKTE55UVVYZyJ9.eyJpc3MiOiJodHRwczovL2Rldi12aXd3b3g3ei51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQxNDM1ODUzMTg3NDY2OTgwNjUiLCJhdWQiOiJlVURwNUZyb2I5SGRZdWVkTnl5eklkVTBjZk9jajk0OCIsImlhdCI6MTYyODU1ODE3NCwiZXhwIjoxNjI4NTk0MTc0LCJhdF9oYXNoIjoiZHBtSFNpTjY0OGdOZXVkMFNta1ZhZyIsIm5vbmNlIjoiWlo4SU4xRllYaE1ENjBpeHlWUDl6NS13NkxGSUpMeFMifQ.t4bs_81Vt-R2uH38BETyA9khEdBmBYpuYs4EayvngNRVuZ9K8ncxJY6fgl8BOrhg4NmOcy7svIQnaZksE_I2mh6ESpx_E6glJlYmZehUNyum0UF2AmvqumBuQkCP_fzDOCVIN6Fwcq9zzFPYJXIG31GTkvZszPd8T2KR3D2_1Xh3jz5VpBx1H2KUqkBiLdU2F9-AwWlhQPv3OUkUVj4aX2AAhu8rMbfQDB0n1M2gkHEAbh75IxUuE2NQLjo3Hdk2XoDaR7LQUD5tIUoiI6O8AXFqZKazOqRZPmjWWo4VygAuRhzuy_e05IWYaebBsGyFkJvclCVHLWZSD6SZwA6H1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Test2\",\n    \"amount\": \"1\",\n    \"status\": \"Canceled\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions",
+					"protocol": "https",
+					"host": [
+						"9aghsuepzh",
+						"execute-api",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"transactions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "transactions",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Test2\",\n    \"amount\": \"1\",\n    \"status\": \"Canceled\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions",
+							"protocol": "https",
+							"host": [
+								"9aghsuepzh",
+								"execute-api",
+								"us-west-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"transactions"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "268"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Aug 2021 01:16:52 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "1cd353bf-a6b8-4a51-a18d-54c4b329af10"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "D038yGHtPHcFnBQ="
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-6111d384-64b444464581f1851308912d"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 b37cc7ef8dedff2c0260690fd3934220.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SCL50-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "kxNSTZT_AX2LpN6agOZ0Z7pxHGcFc-ZQWun_nga9sEBoGQ3HBGBKIw=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"item\": {\n        \"transactionId\": \"0e5fbe5d-1152-4789-a5bd-117ebb2b1b3b\",\n        \"createdAt\": \"2021-08-10T01:16:52.866Z\",\n        \"status\": \"Canceled\",\n        \"amount\": \"1\",\n        \"description\": \"Test2\",\n        \"attachmentUrl\": \"https://udacity-capstone-ardiles-dev.s3.amazonaws.com/0e5fbe5d-1152-4789-a5bd-117ebb2b1b3b\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "attachment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikp4TDI2REpFTFRrWTVKTE55UVVYZyJ9.eyJpc3MiOiJodHRwczovL2Rldi12aXd3b3g3ei51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQxNDM1ODUzMTg3NDY2OTgwNjUiLCJhdWQiOiJlVURwNUZyb2I5SGRZdWVkTnl5eklkVTBjZk9jajk0OCIsImlhdCI6MTYyODQ1NTM1MCwiZXhwIjoxNjI4NDkxMzUwLCJhdF9oYXNoIjoiOGJTVVRGWjU3OHd0VzhIQ3ZSZEZIZyIsIm5vbmNlIjoiTlV1b2lzNTVSTGJRYzAtMWV2aWhLQl9VMWI5WTRPVkoifQ.GbZwHKiZ35xgSy8gAoHzcMcvyEqNCUgcBLIhRKfFCiecHqqaN6c1O9csCYK_pgNJI59bj-zr1DiQIJhR-k6dRQzbRTwzVIpT3gpeeVie1-wdc0XQlplu2QI0EF0bzSdVmgTlNU0qI_O2M15-dOq3e6BfSx_MTNyoOGI5JZ88edHj8P2SmmUj2kyPwA9d7rmVRHlN83Qoz6BjwxoQW8GGOgrk-d0DUy3ElO8OhZmtP10fY9_Qet6hWqUxrzHGAIIGfsQrXqJ7tfNqvp25uOWwCaAYCCbBVygfFuT-h-8ln09NmpP54q8Ish98Du6-sM0mAeV0l7ZsX0oyOC4Yuv6u1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/ricardoardiles/Desktop/comercio.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions/833512ca-30e5-4910-831a-18865470ff8b/attachment",
+					"protocol": "https",
+					"host": [
+						"9aghsuepzh",
+						"execute-api",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"transactions",
+						"833512ca-30e5-4910-831a-18865470ff8b",
+						"attachment"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "attachment",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/ricardoardiles/Desktop/comercio.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://9aghsuepzh.execute-api.us-west-2.amazonaws.com/dev/transactions/833512ca-30e5-4910-831a-18865470ff8b/attachment",
+							"protocol": "https",
+							"host": [
+								"9aghsuepzh",
+								"execute-api",
+								"us-west-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"transactions",
+								"833512ca-30e5-4910-831a-18865470ff8b",
+								"attachment"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1272"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Aug 2021 01:18:32 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "92530124-14c1-425f-88df-9ff8094f0e9f"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "D04MZFj2vHcF2Yw="
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-6111d3e8-047f530d581e4de8791dc53c"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 b37cc7ef8dedff2c0260690fd3934220.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SCL50-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "LF-YKTe2W9IYxLqNTO23UUXjKd6csWjHrGxkIVajtYsai9WqkPIPeg=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"uploadUrl\": \"https://udacity-capstone-ardiles-dev.s3.us-west-2.amazonaws.com/833512ca-30e5-4910-831a-18865470ff8b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIATKZDNPUUNQBZAAKJ%2F20210810%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210810T011832Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIAGOuX%2F0DHD77cD%2BmoGSVXC7stSSEH98prFSUq5mWfsKAiBHOPpWSyvGci4tctcr91RZY3YtpzoIVAe1YreCU6G1Jiq0Agiy%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAIaDDIyOTMxODE2Mzc1MiIMQZYMbnN9dTad1FamKogC0CEfp9OAa%2F16q2pr%2BbGYxgwl%2B8OHlQtCivknh4IMsNA6AZZFr2tHd59e3pmTCDH%2BTCSdVuzAJhnwc2NR8Vt8eereHSO55rnJ0CPRONvGHlR7UXhXlE5Qh%2F8l9pdBTg9S9ItIrwtlMroFZjEE0knAg5nV2jrxE7DpHW7jXYaHVOxSa8jYaDv7%2BdQ71DS%2FIEviGiHvIGFIvY%2BPsMgUNjHO44lQTdzwgnUqjxAHezQTU5yI2BCHsoATObV2TQB%2FA%2B1LhebCLPzS23OKthlggpdOOBbwmOrMbpsQ770c21JcD2pn5%2F2FgPCnQCwHciUxydSVWyHSCCm28LGgi%2Fgp31oVhBy09lvHQ%2FhQMKmnx4gGOpsBOtlTBbYNQ0tsenCoPY00SRr%2FCm%2Fd%2BHRChPujEXtc%2Bv7%2BU9pzx3KIwd10nQkvD3rBBjS8BBHpXageyXVki3rA9RzPl%2BfGHMMgL0F9cp9p6BsC%2FL5gSAp%2B0E4QtOdQGJLDBJ5oV4Lx14X2PTKQ4T5gCwsr%2FvOlyXpv4ZXzUK%2FO0hh89rW3xfG0zK3JLUS3JYMtF1gTJXvfFHqNHXM%3D&X-Amz-Signature=80c430d91617f0c079e8523f1648d1119238edf4c39de2bd9cba331ccba1f720&X-Amz-SignedHeaders=host\"\n}"
+				}
+			]
+		}
+	]
+}
