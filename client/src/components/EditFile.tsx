@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { History } from 'history'
 import { Form, Button } from 'semantic-ui-react'
 import Auth from '../auth/Auth'
 import { getUploadUrl, uploadFile } from '../api/transactions-api'
@@ -15,7 +16,8 @@ interface EditTodoProps {
       transactionId: string
     }
   }
-  auth: Auth
+  auth: Auth,
+  history: History
 }
 
 interface EditTodoState {
@@ -57,6 +59,9 @@ export class EditFile extends React.PureComponent<
       await uploadFile(uploadUrl, this.state.file)
 
       alert('File was uploaded!');
+      this.props.history.push({
+        pathname: `/`,
+      })
       
     } catch (e) {
       alert('Could not upload a file: ' + e.message)
