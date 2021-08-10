@@ -2,7 +2,19 @@
 
 # Getting Started
 
-This repository contains backend and client code of the Capstone project. 
+This project uses the TODO list from project 4 and transforms it into a list of transactions or payments for a store. 
+
+The idea is to create transactions to have a record of the income with the possibility of having 3 statuses: 
+* Pending.
+* Canceled.
+* Completed.
+
+Once the transaction is created there are 3 buttons:
+* Pencil: Update amount, description and status.
+* File: Upload voucher photo.
+* Cross: Delete transaction.
+
+At the bottom are the totals for the 3 states and the final total.
 
 As we learned in class, this project is divided in 2 parts:
 * [backend](backend)
