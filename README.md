@@ -56,7 +56,10 @@ backend/serveless.yml contains all structure to deploy in AWS (Resources, Enviro
 
 Client folder contains Web App deployed to connect with the backend with Auth0 Security. 
 
-Client run with Elastic Beanstalk and the url is: [http://client-dev.us-west-2.elasticbeanstalk.com/](http://client-dev.us-west-2.elasticbeanstalk.com/)
+Client run with Elastic Beanstalk and the url is: 
+```
+http://client-dev.us-west-2.elasticbeanstalk.com/
+```
 
 client/src/config.ts contains the configuration to connect:
 
