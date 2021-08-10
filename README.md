@@ -20,6 +20,10 @@ As we learned in class, this project is divided in 2 parts:
 * [backend](backend)
 * [client](client)
 
+# URL
+
+[http://client-dev.us-west-2.elasticbeanstalk.com/](http://client-dev.us-west-2.elasticbeanstalk.com/)
+
 ## Backend
 
 Backend folder contains the serveless application that run in AWS CloudFormation. The latest version is deployed in:
